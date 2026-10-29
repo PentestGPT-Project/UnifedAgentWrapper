@@ -33,7 +33,7 @@ from .types import (
     UnifiedUsage,
 )
 
-BACKEND_NAMES = ("claude", "codex")
+BACKEND_NAMES = ("claude", "codex", "groq")
 
 
 def _make_backend(backend: "str | AgentBackend") -> AgentBackend:
@@ -48,6 +48,10 @@ def _make_backend(backend: "str | AgentBackend") -> AgentBackend:
             from .backends.codex import CodexBackend
 
             return CodexBackend()
+        if backend == "groq":
+            from .backends.groq import GroqBackend
+
+            return GroqBackend()
     except ImportError as e:
         raise BackendUnavailableError(
             f"backend {backend!r} is installed-time unavailable: {e}. "
